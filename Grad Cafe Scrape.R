@@ -1,6 +1,8 @@
 ######### Libraries
 
 library(xts)
+library(RCurl)
+library(XML)
 
 ######### GET DATA #############
 
