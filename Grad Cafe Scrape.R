@@ -1,19 +1,20 @@
+######### Libraries
+
+library(xts)
+
 ######### GET DATA #############
 
 d1 = data.frame()
 
 for(i in 1:30){
     theurl <- paste("http://thegradcafe.com/survey/index.php?q=statistics&t=a&pp=250&o=&p=",i, sep="")
-tables <- readHTMLTable(theurl)
-tables = tables[[1]]
-tables = data.frame(tables$Institution, tables$"Date Added", tables$"Decision & Date")
-tables = tables[-1,]
-d1 = rbind(d1, tables )
-print(i)
-
-
-if(nrow(tables)<250) break
-
+      tables <- readHTMLTable(theurl)
+      tables = tables[[1]]
+      tables = data.frame(tables$Institution, tables$"Date Added", tables$"Decision & Date")
+      tables = tables[-1,]
+      d1 = rbind(d1, tables )
+      print(i)
+      if(nrow(tables)<250) break
 }
 
 
@@ -45,18 +46,13 @@ wait.v[which(as.character(data.range) %in% names(wait.totals)  == T)] = wait.tot
 response = data.frame(data.range, acc.v, rej.v, wait.v)
 names(response) = c("date", "accept", "reject", "wait")
 
-####################################################################################################
-
-
 ### MONTHLY SUMS ###################################################################################
 acc.m = apply.monthly(as.xts(response$accept,order.by=response$date), FUN= sum )
 rej.m = apply.monthly(as.xts(response$reject,order.by=response$date), FUN= sum )
 wait.m = apply.monthly(as.xts(response$wait,order.by=response$date), FUN= sum )
 
-### PLOT It#################################################################################
+### PLOT #################################################################################
 dat = data.frame(acc.m, rej.m, wait.m)
-
-
 
 dev.off()
 
