@@ -60,6 +60,7 @@ dev.off()
 
 barplot(t(as.matrix(dat)), col=c("green","red", "yellow"), cex.axis=.7, cex.names=.7)
 legend("topleft", legend=c("Accepted", "Rejected", "Wait Listed"), fill=c("green","red", "yellow"))
-title(main = "Grad Cafe Results for Statistics Programs")
+title(main = paste("Grad Cafe Results for Statistics Programs as of", format(max(data.range),"%A %B %d") , sep=" " ))
+
 
 
