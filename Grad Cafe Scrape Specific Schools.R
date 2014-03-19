@@ -53,5 +53,22 @@ text(x=bplt , y=schools ,labels=as.character( schools ), pos=3  )
 
 # Split the Response Rate by Masters and PhD
 
+d2 = d1[grep("rice|angeles|north carolina|southern california|usc|ucla|", tolower(d1[,1])),  ]
+
+bp2 = d2[-grep("state", tolower(d2[,1]) ),] 
+
+school = rep(0, nrow(bp2) )
+bp3 = data.frame(bp2, school)
+
+
+bp3$school[grep("rice", tolower(bp3[,1]))] = "rice"
+bp3$school[grep("north carolina|unc", tolower(bp3[,1]))] = "unc"
+bp3$school[grep("ucla|angeles", tolower(bp3[,1]))] = "ucla"
+bp3$school[grep("usc|southern california", tolower(bp3[,1]))] = "usc"
+
+# split masters and phd now by school
+
+
+
 
 
