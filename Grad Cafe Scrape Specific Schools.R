@@ -11,7 +11,7 @@ for(i in 1:3){
   theurl <- paste("http://thegradcafe.com/survey/index.php?q=statistics&t=a&pp=250&o=&p=",i, sep="")
   tables <- readHTMLTable(theurl)
   tables = tables[[1]]
-  tables = data.frame(tables$Institution, tables$"Date Added", tables$"Decision & Date")
+  tables = data.frame(tables$Institution, tables$"Date Added", tables$"Decision & Date", tables$"Program (Season)")
   tables = tables[-1,]
   d1 = rbind(d1, tables )
   
@@ -22,6 +22,25 @@ for(i in 1:3){
   }
   
 }
+
+d.out = d1
+
+
+############# Split into Masters/PhD ######################################
+
+
+program = "phd"
+
+program = "masters"
+if(program == "phd"){
+  d1 = d.out[grep("phd", tolower(d.out[,4])),]
+} else{
+  d1 = d.out[grep("masters", tolower(d.out[,4])),]
+  
+}
+
+
+
 
 ####### Find the Results for the schools I applied #########################
 
@@ -42,7 +61,7 @@ usc = sum(bp[grep("usc|southern california", names(bp))])
 schools = c(rice, unc, ucla, usc)
 bplt = barplot(schools ,names.arg= 
           c("rice", "unc", "ucla", "usc")  ,  
-        cex.names=.7, main=paste("Results as of", 
+        cex.names=.7, main=paste(toupper(program), "Results as of", 
         Sys.Date(), sep= " "), ylim=c(0, max(c(rice, unc, ucla, usc))+10)
 )
 text(x=bplt , y=schools ,labels=as.character( schools ), pos=3  )
@@ -66,7 +85,7 @@ bp3$school[grep("north carolina|unc", tolower(bp3[,1]))] = "unc"
 bp3$school[grep("ucla|angeles", tolower(bp3[,1]))] = "ucla"
 bp3$school[grep("usc|southern california", tolower(bp3[,1]))] = "usc"
 
-# split masters and phd now by school
+
 
 
 
